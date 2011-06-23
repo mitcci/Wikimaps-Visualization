@@ -1,0 +1,93 @@
+body {
+    margin: 0;
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 15px;
+    
+}
+
+a:link {color: #599FCF; text-decoration: underline; }
+   a:active {color: #599FCF; text-decoration: underline; }
+   a:visited {color: #599FCF; text-decoration: underline; }
+   a:hover {color: #599FCF; text-decoration: none; }
+
+.control {
+    margin: 10px; 
+    font-size: 20px;
+}
+
+.ui-base-box {
+    position: absolute;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -moz-box-shadow: 5px 5px 5px black;
+    -webkit-box-shadow: 5px 5px 5px black;
+    box-shadow: 5px 5px 5px black;
+    border-style:solid;
+    border-width:5px;
+    border-color:#60B9CE;
+    background-color:#2F4D71;
+    width: 300px;
+    left: 100px; 
+    margin: 10px; 
+}
+
+.ui-base-text {
+    margin: 10px;
+   
+}
+
+#animation-controls {
+    top: 50px;
+    height: 110px;
+}
+
+#change-log {
+    top: 210px;
+    height: 450px;
+    overflow: auto;
+}
+
+#about-box {
+    top: 700px;
+}
+
+#frameInfo {
+    position: relative;
+}
+
+#slider { 
+	position: relative;
+	width: 260px;
+}
+
+.slider-wrapper {
+ padding-left: 20px;   
+}
+
+.log-element {
+    padding-top:20px;
+}
+
+.log-title {
+    text-decoration:underline;
+}
+
+.log-details {
+    padding-left: 0;
+    list-style-type: none;
+}
+
+ul#icons {
+    margin: 0; padding: 0;
+    padding-left: 115px;
+        padding-top: 10px;
+}
+
+ul#icons li {
+    margin: 2px; position: relative; padding: 4px 0; cursor: pointer; float: left;  list-style: none;
+}
+
+ul#icons span.ui-icon {
+    float: left; margin: 0 4px;
+}
+
