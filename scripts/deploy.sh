@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # get git stuff
-git update
+git pull
 
 # compress js files
 cd src/main/webapp/js
