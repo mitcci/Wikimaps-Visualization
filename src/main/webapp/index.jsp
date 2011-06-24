@@ -1,22 +1,31 @@
 <html>
-<head> 
-    <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
-    <title>Force-Directed Layout</title> 
-    <script type="text/javascript" src="/js/protovis-r3.2.js"></script>  
-    <script type="text/javascript" src="/js/initialGraph.js"></script> 
-	<script type="text/javascript" src="/js/nodeHelpers.js"></script> 
-	
-	<script type="text/javascript" src="js/jquery-1.5.1.min.js"></script>
-	<script type="text/javascript" src="js/jquery-ui-1.8.13.custom.min.js"></script>	
-	<link href="/css/overcast/jquery-ui-1.8.13.custom.css" rel="stylesheet" type="text/css"/>	
-    <link href="/css/base.css" rel="stylesheet" type="text/css"/>
+<head>
+<meta http-equiv="Content-Type"
+	content="application/xhtml+xml; charset=utf-8" />
+<title>Force-Directed Layout</title>
+<script type="text/javascript" src="/js/protovis-r3.2.js"></script>
+<script type="text/javascript" src="/js/nodeHelpers.js"></script>
+
+<script type="text/javascript" src="js/jquery-1.6.1.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.13.custom.min.js"></script>
+<link href="/css/overcast/jquery-ui-1.8.13.custom.css" rel="stylesheet"
+	type="text/css" />
+<link href="/css/base.css" rel="stylesheet" type="text/css" />
 
 
 <script type="text/javascript"> 
 
 var currentTimeouts = [];
+var initialGraph = [];
+var frameInformation = [];
+var mouseOverNodeName;
 
 $(document).ready(function() {
+	
+   $('#graph-selector-dropdown').change(function(ev) {
+	   console.debug(ev);
+	   
+   });
 	
 	//hover states on the static widgets
 	$('#dialog_link, ul#icons li').hover(
@@ -96,10 +105,28 @@ function printNodeNameList(nodeList) {
 }
 
 </script>
-</head> 
+</head>
 
-<body> 
+<body>
 	<script type="text/javascript"> 
+
+   loadGraphData("/js/initialGraph.js");
+   
+	function loadGraphData(jsonURL) {
+		$.ajax({
+		        type: "GET",
+		        url: jsonURL,
+		        async: false,
+		        mimeType: 'application/json',
+		        success: function(data) {
+		        	  initialGraph = data.initialGraph;
+		        	  frameInformation = data.frameInformation;
+		        	  vis.reset();
+		        	  vis.render();
+		       }
+		});
+	}
+	
 	function transform() {
 	    var t = this.transform().invert();
 	    $('body').data('currentZoomLevel', t.x);
@@ -135,27 +162,46 @@ function printNodeNameList(nodeList) {
 	    .chargeConstant(-100);
 
 	force.link.add(pv.Line)
-		.strokeStyle("#60B9CE");
+		.strokeStyle(function(d, p) {
+			             if (p.sourceNode.nodeName == mouseOverNodeName || p.targetNode.nodeName ==  mouseOverNodeName) {
+			            	return "black";
+			            } else {
+			            	return "#60B9CE";
+			           }});
 
 	force.node.add(pv.Dot)
 	    .size(function(d) {
 			return (d.linkDegree + 4) * Math.pow(this.scale, -1.5);
 		})
 	    .fillStyle(function(d) {
-			return "#909DAD"; 
-		})
+	    	 if(d.nodeName == mouseOverNodeName) {
+	                return "black";
+	            } else {
+	                return "#909DAD";
+	            }
+	            })
 	    .strokeStyle(function() {
 			return this.fillStyle().darker();
 		})
 	    .lineWidth(1)
+		   
 	    .title(function(d) { 
 			return d.nodeName; 
 		})
+	    .event("mouseover", function(node) {
+	    	mouseOverNodeName = node.nodeName;
+	    	vis.render();
+		 })
+		//.event("click", function(node) {
+		//	console.debug(node.nodeName + " clicked");
+		//	})
 	    .event("mousedown", pv.Behavior.drag())
-	    .event("drag", force);
+	    .event("drag", force)
+	    .event("dblclick", console.debug("dblclick"));
 
 	force.label.add(pv.Label)
-	    .bottom(0)
+	    //.bottom(0)
+	    //.left(10)
 		.textStyle("#FFF1DC")
 		.textDecoration("underline")
 	    .font(function(node) {
@@ -191,29 +237,49 @@ function printNodeNameList(nodeList) {
 
 </script>
 
+    <div id="graph-selector" class="ui-base-box">
+        <div class="control">Select your Graph:</div>
+		<select id="graph-selector-dropdown" size="1">
+		  <option value="1">Musicians / Bands</option>
+		  <option value="2">Bands</option>
+		  <option value="3">Modern Musicians and Bands</option>
+		  <option value="4">Classical Musicians</option>
+		</select>
+    </div>
+
 	<div id="animation-controls" class="ui-base-box">
-		<div class="control" id="frameInfo">Date: </div>
+		<div class="control" id="frameInfo">Date:</div>
 
 		<div class="slider-wrapper">
 			<div id="slider">&nbsp;</div>
 		</div>
 		<ul class="ui-widget ui-helper-clearfix" id="icons">
-			<li id="play" title=".ui-icon-play" class="ui-state-default ui-corner-all ui-state-hover"><span class="ui-icon ui-icon-play"></span></li>
-			<li id="pause" title=".ui-icon-pause" class="ui-state-default ui-corner-all ui-state-hover"><span class="ui-icon ui-icon-pause"></span></li>
-		</ul> 
+			<li id="play" title=".ui-icon-play"
+				class="ui-state-default ui-corner-all ui-state-hover"><span
+				class="ui-icon ui-icon-play"></span>
+			</li>
+			<li id="pause" title=".ui-icon-pause"
+				class="ui-state-default ui-corner-all ui-state-hover"><span
+				class="ui-icon ui-icon-pause"></span>
+			</li>
+		</ul>
 
 	</div>
-	
+
 	<div id="change-log" class="ui-base-box">
 		<div id="LogInfo" class="control">Change-Log</div>
 		<ul></ul>
 	</div>
 	<div id="about-box" class="ui-base-box">
 		<div class="control">About</div>
-		<div class="ui-base-text"> 
-			Based on ideas of Keiichi Nemoto, Peter Gloor and <a href="http://twitter.com/ret0">Reto Kleeb</a>. Realization by Reto Kleeb. Powered by <a href="http://vis.stanford.edu/protovis/">Protovis</a> / <a href="http://jquery.com/">jQuery</a>. Data provided by <a href="http://www.wikipedia.org/">Wikipedia</a>.
+		<div class="ui-base-text">
+			Based on ideas of Keiichi Nemoto, Peter Gloor and <a
+				href="http://twitter.com/ret0">Reto Kleeb</a>. Realization by Reto
+			Kleeb. Powered by <a href="http://vis.stanford.edu/protovis/">Protovis</a>
+			/ <a href="http://jquery.com/">jQuery</a>. Data provided by <a
+				href="http://www.wikipedia.org/">Wikipedia</a>.
 		</div>
-		
+
 	</div>
-  </body> 
-</html> 
+</body>
+</html>

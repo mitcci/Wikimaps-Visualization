@@ -109,3 +109,4 @@ function setNewFrameREVERSE(newFrameIndex) {
     force.reset();
 	vis.render();
 }
+
