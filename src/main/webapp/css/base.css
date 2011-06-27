@@ -30,7 +30,6 @@ a:hover {
 }
 
 .ui-base-box {
-	position: absolute;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 	-moz-box-shadow: 5px 5px 5px black;
@@ -41,37 +40,61 @@ a:hover {
 	border-color: #60B9CE;
 	background-color: #2F4D71;
 	width: 300px;
-	left: 100px;
 	margin: 10px;
+}
+
+.box-container {
+	top: 20px;
+}
+
+#boxes-left {
+	position: absolute;
+	left: 50px;
+}
+
+
+#boxes-right {
+    position: absolute;
+    left: 375px;
 }
 
 .ui-base-text {
 	margin: 10px;
 }
 
+.plus-minus-icon {
+	top: -40px;
+    left: 140px;
+}
+
 #graph-selector {
-	top: 10px;
 	height: 90px;
 }
 
 #graph-selector-dropdown {
-	margin-left: 50px;
+	margin-left: 25px;
 	margin-top: 10px;
 }
 
+.helper-box-compressed {
+    height: 42px;
+    overflow: hidden;
+}
+
+.helper-box-expanded {
+}
+
 #animation-controls {
-	top: 125px;
 	height: 110px;
 }
 
 #change-log {
-	top: 260px;
-	height: 400px;
+	height: 330px;
 	overflow: auto;
 }
 
-#about-box {
-	top: 700px;
+#additionalNodeInfo {
+	height: 90px;
 }
 
 #frameInfo {

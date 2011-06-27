@@ -72,7 +72,6 @@ function setNewFrame(newFrameIndex) {
     }
     console.debug("strange empyt with index: " + newFrameIndex);
 	console.debug("Adding: ", this.frameInformation[newFrameIndex].add);
-	//$("#change-log").add("li");
 	console.debug("Deleting: ",this.frameInformation[newFrameIndex].del);
 	
 	var updatedList = addNodes(nodesInCurrentFrame, this.frameInformation[newFrameIndex].add); 
@@ -95,7 +94,6 @@ function setNewFrameREVERSE(newFrameIndex) {
     
     console.debug("reverse!")
 	console.debug("Adding: ", this.frameInformation[newFrameIndex].del);
-	//$("#change-log").add("li");
 	console.debug("Deleting: ",this.frameInformation[newFrameIndex].add);
 	
 	var updatedList = addNodes(nodesInCurrentFrame, this.frameInformation[newFrameIndex].del); 
@@ -110,3 +108,60 @@ function setNewFrameREVERSE(newFrameIndex) {
 	vis.render();
 }
 
+function showLinkElement(node) {
+		$("#additionalNodeInfo div").html("Read more about <a href=\"http://en.wikipedia.org/wiki/" + node.nodeName + "\" target=\"_blank\">" + node.nodeName + " on Wikipedia</a>");
+}
+
+function loadGraphData(jsonURL) {
+    $.ajax({
+            type: "GET",
+            url: jsonURL,
+            async: false,
+            mimeType: 'application/json',
+            success: function(data) {
+                  initialGraph = data.initialGraph;
+                  frameInformation = data.frameInformation;
+                  nodesInCurrentFrame = initialGraph.nodes; 
+          	    linksInCurrentFrame = initialGraph.links;
+          	  $("#change-log > ul").empty();
+                  force.nodes(initialGraph.nodes);
+              	  force.links(initialGraph.links);
+              	  this.frameInformation = data.frameInformation;
+              	  $("#frameInfo").text("Date: " + initialGraph.date);
+              	  $("#slider").slider( "option", "value", 0 );
+              	$('body').data('lastSliderIndex', 0);
+              	  stopAnimation();
+                  force.reset();
+                  vis.render();
+           }
+    });
+}
+
+function stopAnimation() {
+	$("#slider").css("background", "");
+	for	(index in currentTimeouts) {
+		clearTimeout(currentTimeouts[index]);
+	}	
+}
+
+/**
+ * @param nodeList
+ * @returns String containing a comma separated list of nodenames
+ */
+function printNodeNameList(nodeList) {
+	if(nodeList.length == 0) {
+		return "-";
+	} else {
+		return jQuery.map(nodeList, function(n, i){ return (n.nodeName); }).join(", ");
+	}
+}
+
+function createLogEntry(frameInfo) {
+	var elem = "<li class=\"log-element\">";
+	elem += "<span class=\"log-title\">Date: " + frameInfo.date + "</span>";
+	elem += "<ul class=\"log-details\">";
+	elem += "<li>Adding: " + printNodeNameList(frameInfo.add) + "</li>";
+	elem += "<li>Deleting: " + printNodeNameList(frameInfo.del) + "</li>";
+	elem += "</ul></li>";
+	return elem;
+}
