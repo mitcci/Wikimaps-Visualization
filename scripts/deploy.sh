@@ -12,4 +12,4 @@ for f in *.js ; do gzip -c "$f" > "$f.gz" ; done
 
 # start webserver
 cd ../../../..
-mvn jetty:run
+mvn jetty:run&
