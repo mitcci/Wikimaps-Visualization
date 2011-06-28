@@ -1,6 +1,5 @@
+<html lang="en"> 
 
-
-<html>
 <head>
 <meta http-equiv="Content-Type"
 	content="application/xhtml+xml; charset=utf-8" />
@@ -26,75 +25,13 @@ var linksInCurrentFrame = [];
 var force;
 var vis;
 
-function toggleInfoBox(elementID, reference) {
-	  $(reference).parents(elementID).toggleClass("helper-box-compressed");
-      $(reference).children().toggleClass("ui-icon-plusthick ui-icon-minusthick")
-}
 
 $(document).ready(function() {
 
 	 loadGraphData("/js/initialGraph_CLASSICAL_MUSIC.js");
 
-    $("#usageHints div ul li").toggle(
-       function (el) { toggleInfoBox("#usageHints", this);
-    }, function(el) { toggleInfoBox("#usageHints", this);
-    });
-
-    $("#about-box div ul li").toggle(
-       function (el) { toggleInfoBox("#about-box", this);
-    }, function(el) { toggleInfoBox("#about-box", this);
-    });
-	
-   $('#graph-selector-dropdown').change(function(ev) {
-	   loadGraphData(ev.target[ev.target.selectedIndex].value);
-   });
-	
-	//hover states on the static widgets
-	$('#dialog_link, ul#icons li').hover(
-		function() { $(this).addClass('ui-state-hover'); }, 
-		function() { $(this).removeClass('ui-state-hover'); }
-	);
-	
-   $("#frameInfo").text("Date: " + initialGraph.date);
-	
-   $("#slider").slider({ 
-	max: frameInformation.length - 1, 
-	animate: true,
-	change: function(event, ui) {
-		if(event.button == 0) {
-			stopAnimation();
-			slideChange(ui.value, false);
-		}
-	}
-	});
-	
-	$("#play").click(function() {
-		var delta = 1800;
-		var counter = 1;
-		$("#slider").css("background", "#A0C575");
-		for(var index = $('body').data('lastSliderIndex'); index < frameInformation.length; index++) {
-			(function(index) {
-				if (counter == 1) {
-					currentTimeouts.push(setTimeout(function() { slideChange(index, true); }, counter));
-				} else {
-					currentTimeouts.push(setTimeout(function() { slideChange(index, true); }, delta * counter));
-				}
-				counter = counter + 1;
-			})(index);
-		}
-	});
-	
-	$("#pause").click(stopAnimation);	   
+	 attachEventHandlers();
 	    
-	    /*
-	     * Zoom
-	     */
-	    function transform() {
-	        var t = this.transform().invert();
-	        $('body').data('currentZoomLevel', t.x);
-	        vis.render();
-	    }
-
 	    //initial values for animation controls
 	    $('body').data('currentZoomLevel', 1);
 	    $('body').data('lastSliderIndex', 0);
@@ -125,11 +62,11 @@ $(document).ready(function() {
 
 	    force.link.add(pv.Line)
 	        .strokeStyle(function(d, p) {
-	                         if (p.sourceNode.nodeName == mouseOverNodeName || p.targetNode.nodeName ==  mouseOverNodeName) {
-	                            return "black";
-	                        } else {
-	                            return "#60B9CE";
-	                       }});
+                   if (p.sourceNode.nodeName == mouseOverNodeName || p.targetNode.nodeName ==  mouseOverNodeName) {
+                      return "black";
+                  } else {
+                      return "#60B9CE";
+                 }});
 
 	    force.node.add(pv.Dot)
 	        .size(function(d) {
@@ -146,7 +83,6 @@ $(document).ready(function() {
 	            return this.fillStyle().darker();
 	        })
 	        .lineWidth(1)
-	           
 	        .title(function(d) { 
 	            return d.nodeName; 
 	        })
@@ -197,29 +133,6 @@ $(document).ready(function() {
 		
  });
 
-
-function stopAnimation() {
-	$("#slider").css("background", "");
-	for	(index in currentTimeouts) {
-		clearTimeout(currentTimeouts[index]);
-	}	
-}
-
-function slideChange(index, updateSlider) {
-	if(updateSlider) {
-		$("#slider").slider("option", "value", index);		
-	}
-	var newFrameIndex = index;
-	var oldFrameIndex = $('body').data('lastSliderIndex');
-	$('body').data('lastSliderIndex', newFrameIndex);
-	generateGraphForFrame(oldFrameIndex, newFrameIndex);
-	$("#frameInfo").text("Date: " + frameInformation[newFrameIndex].date);
-	$("#change-log").scrollTop(8000);
-}
-
-
-
-
 </script>
 </head>
 
@@ -255,9 +168,24 @@ function slideChange(index, updateSlider) {
 			</ul>
 	
 		</div>
+		
+		<div id="zoom-control" class="ui-base-box">
+            <div id="LogInfo" class="control">Zoom-Controls:</div>
+            <ul class="ui-widget ui-helper-clearfix" id="icons">
+	            <li id="ui-icon-zoomin" title=".ui-icon-zoomin" class="ui-state-default ui-corner-all ui-state-hover">
+	                <span class="ui-icon ui-icon-zoomin"></span>
+	            </li>
+	            <li id="ui-icon-zoomout" title=".ui-icon-zoomout" class="ui-state-default ui-corner-all ui-state-hover">
+	                <span class="ui-icon ui-icon-zoomout"></span>
+	            </li>
+	            <li id="ui-icon-search" title=".ui-icon-search" class="ui-state-default ui-corner-all ui-state-hover">
+	                <span class="ui-icon ui-icon-search"></span>
+	            </li>
+            </ul>
+        </div>
 	
 		<div id="change-log" class="ui-base-box">
-			<div id="LogInfo" class="control">Change-Log</div>
+			<div id="LogInfo" class="control">Change-Log:</div>
 			<ul></ul>
 		</div>
 		<div id="usageHints" class="ui-base-box helper-box-compressed">
