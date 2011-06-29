@@ -52,7 +52,6 @@ a:hover {
 	left: 50px;
 }
 
-
 #boxes-right {
     position: absolute;
     left: 375px;
@@ -63,8 +62,16 @@ a:hover {
 }
 
 .plus-minus-icon {
-	top: -40px;
     left: 140px;
+}
+
+.zoom-button-list {
+    left: 110px;
+}
+
+.top-aligned-button-list {
+	position: relative;
+	top: -40px;
 }
 
 #graph-selector {
@@ -79,9 +86,6 @@ a:hover {
 .helper-box-compressed {
     height: 42px;
     overflow: hidden;
-}
-
-.helper-box-expanded {
 }
 
 #animation-controls {

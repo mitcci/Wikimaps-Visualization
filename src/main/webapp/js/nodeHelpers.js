@@ -130,7 +130,16 @@ function loadGraphData(jsonURL) {
             $("#slider").slider("option", "value", 0);
             $('body').data('lastSliderIndex', 0);
             stopAnimation();
+            
+            /* Initialize positions randomly near the center. */ 
+            for (var i = 0, n; i < force.nodes().length; i++) { 
+              n = force.nodes()[i]; 
+              if (isNaN(n.x)) n.x = w / 2 + 40 * Math.random() - 20; 
+              if (isNaN(n.y)) n.y = h / 2 + 40 * Math.random() - 20; 
+            } 
+            
             force.reset();
+            force.render();
             vis.render();
         }
     });
@@ -177,6 +186,8 @@ function zoom(type_zoom) {
     var k0 = vis.transform().k;
     var w = vis.width();
     var h = vis.height();
+    
+    //$('body').data('currentZoomLevel', x0);
 
     // calculate the original values I submitted (the values before and after the rendering are different)
     var x0_submitted = (x0 / k0)
@@ -233,14 +244,16 @@ function attachEventHandlers() {
 
     $("#ui-icon-zoomin").click(function (ev) {
         zoom("in");
+        var t = vis.transform().invert();
+        $('body').data('currentZoomLevel', t.k);
     });
+    
     $("#ui-icon-zoomout").click(function (ev) {
         zoom("out");
+        var t = vis.transform().invert();
+        $('body').data('currentZoomLevel', t.k);
     });
-    $("#ui-icon-search").click(function (ev) {
-        loadGraphData($('#graph-selector-dropdown').val());
-    });
-
+    
     //hover states on the static widgets
     $('#dialog_link, ul#icons li').hover(
 
@@ -292,7 +305,7 @@ function attachEventHandlers() {
  */
 function transform() {
     var t = this.transform().invert();
-    $('body').data('currentZoomLevel', t.x);
+    $('body').data('currentZoomLevel', t.k);
     vis.render();
 }
 
