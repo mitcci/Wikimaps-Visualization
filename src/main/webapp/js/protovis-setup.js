@@ -62,7 +62,7 @@ function initializeCompletePanel() {
        .event("mousedown", pv.Behavior.drag())
        .event("drag", force);
 
-
+   
    force.label.add(pv.Label)
        .textStyle("#FFF1DC")
        .textDecoration("underline")
@@ -86,6 +86,9 @@ function initializeCompletePanel() {
                }
                return "";
            });
+   
+   //force.
+   	//	transform(pv.Transform.identity.scale(4).translate(-550,-300));
 
    force.reset();
    vis.render();
