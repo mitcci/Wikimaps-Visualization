@@ -6,9 +6,12 @@ function initializeCompletePanel() {
 	
 	var colors = pv.Colors.category10();
 	
+	var width = document.body.clientWidth;
+	var height = document.body.clientHeight;
+	
 	   vis = new pv.Panel()
-       .width(document.body.clientWidth)
-       .height(document.body.clientHeight)
+       .width(width)
+       .height(height)
        .fillStyle("#2F4D71")
        .event("mousedown", panner)
        .event("mousewheel", zoomer)
@@ -81,14 +84,14 @@ function initializeCompletePanel() {
            })
        .text(function(node) {
                var zoomLevel = $('body').data('currentZoomLevel');
-               if(zoomLevel < 0.18) {
+               //if(zoomLevel < 0.18) {
             	   return node.nodeName;
-               }
-               return "";
+               //}
+               //return "";
            });
    
-   //force.
-   	//	transform(pv.Transform.identity.scale(4).translate(-550,-300));
+   force.
+   		transform(pv.Transform.identity.scale(4).translate(-(width/2.8), -(height/2.8)));
 
    force.reset();
    vis.render();
