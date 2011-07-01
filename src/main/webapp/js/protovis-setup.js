@@ -4,6 +4,8 @@ function initializeCompletePanel() {
 	var panner = new pv.Behavior.pan().bound(1);
 	var zoomer = new pv.Behavior.zoom(2).bound(1);
 	
+	var colors = pv.Colors.category10();
+	
 	   vis = new pv.Panel()
        .width(document.body.clientWidth)
        .height(document.body.clientHeight)
@@ -39,7 +41,7 @@ function initializeCompletePanel() {
             if(d.nodeName == mouseOverNodeName) {
                    return "black";
                } else {
-                   return "#909DAD";
+                   return colors(d.group);
                }
                })
        .strokeStyle(function() {
