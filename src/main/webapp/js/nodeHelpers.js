@@ -43,7 +43,12 @@ function transferToIndex(nodelist, linklist) {
 }
 
 function generateGraphForFrame(oldFrameIndex, newFrameIndex) {
-    $("#change-log > ul").append(createLogEntry(frameInformation[newFrameIndex]));
+	var index = newFrameIndex - 1;
+	if(index < 0) {
+		//$("#change-log > ul").append(createLogEntry(initialGraph));
+	} else {
+		$("#change-log > ul").append(createLogEntry(frameInformation[index]));
+	}
 
     var delta = newFrameIndex - oldFrameIndex;
     console.debug(delta);
@@ -53,7 +58,7 @@ function generateGraphForFrame(oldFrameIndex, newFrameIndex) {
             setNewFrame(oldFrameIndex + i);
         }
     } else if (oldFrameIndex > newFrameIndex) { // backwards in time
-        for (var i = 0; i < Math.abs(delta); i++) {
+        for (var i = 1; i < Math.abs(delta); i++) {
             console.debug("old index was: " + oldFrameIndex);
             setNewFrameREVERSE(oldFrameIndex - i);
         }
@@ -273,6 +278,10 @@ function attachEventHandlers() {
                 stopAnimation();
                 slideChange(ui.value, false);
             }
+        },
+        slide: function(event, ui) {
+        	stopAnimation();
+            slideChange(ui.value, false);
         }
     });
 
@@ -322,8 +331,12 @@ function slideChange(index, updateSlider) {
     }
     var newFrameIndex = index;
     var oldFrameIndex = $('body').data('lastSliderIndex');
-    $('body').data('lastSliderIndex', newFrameIndex);
-    generateGraphForFrame(oldFrameIndex, newFrameIndex);
-    $("#frameInfo").text("Date: " + frameInformation[newFrameIndex].date);
-    $("#change-log").scrollTop(8000);
+    if(newFrameIndex != oldFrameIndex) {
+    	$('body').data('lastSliderIndex', newFrameIndex);
+    	generateGraphForFrame(oldFrameIndex, newFrameIndex);
+    	if(newFrameIndex - 1 >= 0) {
+    		$("#frameInfo").text("Date: " + frameInformation[newFrameIndex - 1].date);
+    	}
+    	$("#change-log").scrollTop(8000);
+    }
 }
