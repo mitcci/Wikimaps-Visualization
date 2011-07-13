@@ -21,8 +21,13 @@ function initializeCompletePanel() {
 
    force = vis.add(pv.Layout.Force)
        .nodes(initialGraph.nodes)
-       .links(initialGraph.links);
-       //.springConstant(0.05)
+       .links(initialGraph.links)
+   .chargeConstant(-10) 
+       .dragConstant(0.26) 
+       .springDamping(0.1) 
+       .springConstant(0.01); 
+//   .chargeMaxDistance(600);
+   //.springLength(150);
        //.chargeTheta(0.4)
        //.dragConstant(0.009)
        //.bound(true)
