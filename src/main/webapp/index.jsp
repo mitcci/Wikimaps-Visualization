@@ -48,6 +48,11 @@ $(document).ready(function() {
 			  <option value="/js/initialGraph_CLASSICAL_MUSIC_ENGLISH_MUSIC_MUSIC_GROUPS.js">Classical- , Modern-Musicians and Bands</option>
 			  <option value="/js/initialGraph_ENGLISH_MUSIC.js">Modern Musicians</option>
 			  <option value="/js/initialGraph_ENGLISH_MUSIC_MUSIC_GROUPS.js">Modern Musicians and Bands</option>
+			  <option value="/js/initialGraph_BORN_IN_THE_80IES.js">People Born in the 80ies</option>
+			  <option value="/js/Justin_Bieber.json">Justin Bieber</option>
+			  <option value="/js/Dominique_Strauss-Kahn.json">Dominique Strauss-Kahn</option>
+			  <option value="/js/Lady_Gaga.json">Lady Gaga</option>
+			  <option value="/js/Barack_Obama.json">Barack Obama</option>
 			</select>
 	    </div>
 	
