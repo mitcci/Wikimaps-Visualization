@@ -4,15 +4,15 @@
 <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
 <title>Wiki Map Project</title>
 
-<script type="text/javascript" src="/js/protovis.min.js"></script>
-<script type="text/javascript" src="/js/nodeHelpers.js"></script>
-<script type="text/javascript" src="/js/protovis-setup.js"></script>
+<script type="text/javascript" src="js/protovis.min.js"></script>
+<script type="text/javascript" src="js/nodeHelpers.js"></script>
+<script type="text/javascript" src="js/protovis-setup.js"></script>
 
 <script type="text/javascript" src="js/jquery-1.6.1.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.13.custom.min.js"></script>
 
-<link href="/css/overcast/jquery-ui-1.8.13.custom.css" rel="stylesheet" type="text/css" />
-<link href="/css/base.css" rel="stylesheet" type="text/css" />
+<link href="css/overcast/jquery-ui-1.8.13.custom.css" rel="stylesheet" type="text/css" />
+<link href="css/base.css" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript"> 
 var currentTimeouts = [];
@@ -25,7 +25,7 @@ var force;
 var vis;
 
 $(document).ready(function() {
-	loadGraphData("/js/initialGraph_CLASSICAL_MUSIC.js");
+	loadGraphData("js/initialGraph_CLASSICAL_MUSIC.js");
 	attachEventHandlers();
 	//initial values for animation controls
 	$('body').data('currentZoomLevel', 1);
@@ -44,15 +44,15 @@ $(document).ready(function() {
 	    <div id="graph-selector" class="ui-base-box">
 	        <div class="control">Select your Graph:</div>
 			<select id="graph-selector-dropdown" size="1">
-			  <option value="/js/initialGraph_CLASSICAL_MUSIC.js">Classical Musicians</option>
-			  <option value="/js/initialGraph_CLASSICAL_MUSIC_ENGLISH_MUSIC_MUSIC_GROUPS.js">Classical- , Modern-Musicians and Bands</option>
-			  <option value="/js/initialGraph_ENGLISH_MUSIC.js">Modern Musicians</option>
-			  <option value="/js/initialGraph_ENGLISH_MUSIC_MUSIC_GROUPS.js">Modern Musicians and Bands</option>
-			  <option value="/js/initialGraph_BORN_IN_THE_80IES.js">People Born in the 80ies</option>
-			  <option value="/js/Justin_Bieber.json">Justin Bieber</option>
-			  <option value="/js/Dominique_Strauss-Kahn.json">Dominique Strauss-Kahn</option>
-			  <option value="/js/Lady_Gaga.json">Lady Gaga</option>
-			  <option value="/js/Barack_Obama.json">Barack Obama</option>
+			  <option value="js/initialGraph_CLASSICAL_MUSIC.js">Classical Musicians</option>
+			  <option value="js/initialGraph_CLASSICAL_MUSIC_ENGLISH_MUSIC_MUSIC_GROUPS.js">Classical- , Modern-Musicians and Bands</option>
+			  <option value="js/initialGraph_ENGLISH_MUSIC.js">Modern Musicians</option>
+			  <option value="js/initialGraph_ENGLISH_MUSIC_MUSIC_GROUPS.js">Modern Musicians and Bands</option>
+			  <option value="js/initialGraph_BORN_IN_THE_80IES.js">People Born in the 80ies</option>
+			  <option value="js/Justin_Bieber.json">Justin Bieber</option>
+			  <option value="js/Dominique_Strauss-Kahn.json">Dominique Strauss-Kahn</option>
+			  <option value="js/Lady_Gaga.json">Lady Gaga</option>
+			  <option value="js/Barack_Obama.json">Barack Obama</option>
 			</select>
 	    </div>
 	
