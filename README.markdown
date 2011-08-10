@@ -3,7 +3,7 @@
 
 ## Main Use-Case
 Read a JSON File that is produced by <https://github.com/mitcci/Wikimaps-Collector> and display the
-animated graph using <vis.stanford.edu/protovis/> . In the long term the visualization part should
+animated graph using <http://vis.stanford.edu/protovis/> . In the long term the visualization part should
 be ported to <http://mbostock.github.com/d3/>
 
 Examples are online on: <http://ickn.org/wikimaps/>
@@ -21,4 +21,4 @@ available animations
 
 
 ## Initial Autor
-Github-User: ret0
+<https://github.com/ret0>
