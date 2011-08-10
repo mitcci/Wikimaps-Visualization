@@ -1,9 +1,12 @@
 # Project Wikimaps-Visualization
+*Display animated graph of a semantic network of Wikipedia articles using JS*
 
 ## Main Use-Case
 Read a JSON File that is produced by <https://github.com/mitcci/Wikimaps-Collector> and display the
-animated graph using <vis.stanford.edu/protovis/>. In the long term the visualization part should
+animated graph using <vis.stanford.edu/protovis/> . In the long term the visualization part should
 be ported to <http://mbostock.github.com/d3/>
+
+Examples are online on: <http://ickn.org/wikimaps/>
 
 ## Howto-Run
 Deploy the files to any webserver, no serverside frameworks are required. The JSON-Animation files
